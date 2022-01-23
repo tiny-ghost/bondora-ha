@@ -1,0 +1,10 @@
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\bin\Debug\netstandard2.1\Rental.Core.deps.json
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\bin\Debug\netstandard2.1\Rental.Core.dll
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\bin\Debug\netstandard2.1\Rental.Core.pdb
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.csproj.AssemblyReference.cache
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.AssemblyInfoInputs.cache
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.AssemblyInfo.cs
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.csproj.CoreCompileInputs.cache
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.dll
+C:\Users\ealbaps\source\repos\RentalApp\Rental.Core\obj\Debug\netstandard2.1\Rental.Core.pdb
