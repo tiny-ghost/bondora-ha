@@ -17,9 +17,5 @@ namespace Rental.Service
             return await _unitOfWork.Customers.GetAsync(Id);
         }
 
-        public async Task<Customer> GetCustomerByIdWithOrders(int id)
-        {
-            return await _unitOfWork.Customers.GetCustomerWithOrdersAsync(id);
-        }
     }
 }

@@ -7,6 +7,10 @@ namespace Rental.API.Core
     {
 
         public static IServiceCollection Addservice(this IServiceCollection services) => services
-            .AddScoped<ICustomerService,CustomerService>();
+            .AddScoped<ICustomerService,CustomerService>()
+            .AddScoped<IEquipmentService,EquipmentService>()
+            .AddScoped<IOrderService,OrderService>()
+            .AddScoped<IInvoiceService,InvoiceService>()
+            ;
     }
 }

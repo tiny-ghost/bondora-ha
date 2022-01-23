@@ -66,44 +66,55 @@ namespace Rental.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EquipmentOrder",
+                name: "RentalItems",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     EquipmentId = table.Column<int>(type: "int", nullable: false),
-                    OrdersId = table.Column<int>(type: "int", nullable: false)
+                    DaysOfRental = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EquipmentOrder", x => new { x.EquipmentId, x.OrdersId });
+                    table.PrimaryKey("PK_RentalItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EquipmentOrder_Equipment_EquipmentId",
+                        name: "FK_RentalItems_Equipment_EquipmentId",
                         column: x => x.EquipmentId,
                         principalTable: "Equipment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EquipmentOrder_Orders_OrdersId",
-                        column: x => x.OrdersId,
+                        name: "FK_RentalItems_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EquipmentOrder_OrdersId",
-                table: "EquipmentOrder",
-                column: "OrdersId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentalItems_EquipmentId",
+                table: "RentalItems",
+                column: "EquipmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentalItems_OrderId",
+                table: "RentalItems",
+                column: "OrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EquipmentOrder");
+                name: "RentalItems");
 
             migrationBuilder.DropTable(
                 name: "Equipment");

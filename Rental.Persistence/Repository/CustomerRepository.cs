@@ -12,14 +12,7 @@ namespace Rental.Persistence.Repository
 
         }
 
-        public override IQueryable<Customer> Units => base.Units;
+        public override IQueryable<Customer> Units => base.Units.Include(c =>c.Orders);
 
-        public async Task<Customer> GetCustomerWithOrdersAsync(int id)
-        {
-            return await Units
-                .Where(c => c.Id.Equals(id))
-                .Include(c => c.Orders)
-                .FirstOrDefaultAsync();
-        }
     }
 }

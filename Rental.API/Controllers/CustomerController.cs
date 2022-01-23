@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Rental.Core.Contracts.Service;
+using Rental.Core.Models;
 
 namespace Rental.API.Controllers
 {
@@ -21,15 +21,23 @@ namespace Rental.API.Controllers
         {
             var customer = await _customerService.GetCustomerByIdAsync(id);
 
-            return Ok(customer);    
-        }
-        [HttpGet("{id}/orders")]
+            var customerModel = new CustomerViewModel
+            {
+                Id = customer.Id,
 
-        public async Task<IActionResult> GetCustomerByIdWithOrdersASync(int id)
-        {
-            var customer = await _customerService.GetCustomerByIdWithOrders(id);
+                Name = customer.Name
+            };
 
-            return Ok(customer);
+            return Ok(customerModel);
         }
     }
+    //For simplicity and time saving viewmodels stored with controller and mapping is done manually
+    public class CustomerViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<OrderViewModel> Orders { get; set; }
+    }
+
+    
 }

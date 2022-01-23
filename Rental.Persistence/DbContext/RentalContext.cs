@@ -9,6 +9,7 @@ namespace Rental.Persistence
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<RentalItem> RentalItems { get; set; }
 
         public RentalContext(DbContextOptions<RentalContext> options): base(options) { }
 

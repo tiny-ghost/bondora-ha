@@ -12,7 +12,7 @@ using Rental.Persistence;
 namespace Rental.Persistence.Migrations
 {
     [DbContext(typeof(RentalContext))]
-    [Migration("20220122220804_Initial")]
+    [Migration("20220123172653_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,21 +23,6 @@ namespace Rental.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("EquipmentOrder", b =>
-                {
-                    b.Property<int>("EquipmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EquipmentId", "OrdersId");
-
-                    b.HasIndex("OrdersId");
-
-                    b.ToTable("EquipmentOrder");
-                });
 
             modelBuilder.Entity("Rental.Core.Models.Customer", b =>
                 {
@@ -122,19 +107,39 @@ namespace Rental.Persistence.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EquipmentOrder", b =>
+            modelBuilder.Entity("Rental.Core.Models.RentalItem", b =>
                 {
-                    b.HasOne("Rental.Core.Models.Equipment", null)
-                        .WithMany()
-                        .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasOne("Rental.Core.Models.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DaysOfRental")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("RentalItems");
                 });
 
             modelBuilder.Entity("Rental.Core.Models.Order", b =>
@@ -148,9 +153,33 @@ namespace Rental.Persistence.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Rental.Core.Models.RentalItem", b =>
+                {
+                    b.HasOne("Rental.Core.Models.Equipment", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rental.Core.Models.Order", "Order")
+                        .WithMany("RentItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Equipment");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Rental.Core.Models.Customer", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Rental.Core.Models.Order", b =>
+                {
+                    b.Navigation("RentItems");
                 });
 #pragma warning restore 612, 618
         }

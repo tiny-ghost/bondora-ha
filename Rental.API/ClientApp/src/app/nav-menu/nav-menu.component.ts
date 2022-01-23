@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
-
-  collapse() {
-    this.isExpanded = false;
+  public customer: Customer = { name: "", loyaltyPoints: 0 }
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    http.get<Customer>(baseUrl + 'Customer/1').subscribe(result => {
+      this.customer = result;
+    }, error => console.error(error));
   }
+}
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
+interface Customer {
+  name: string;
+  loyaltyPoints: number;
 }

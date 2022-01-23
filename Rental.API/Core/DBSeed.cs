@@ -24,11 +24,6 @@ namespace Rental.API.Core
             new(){ Name = "Bosch jackhammer", Type="Specialized"}
         };
 
-       
-
-
-
-
         public DBSeed(RentalContext context)
         {
             _context = context;
