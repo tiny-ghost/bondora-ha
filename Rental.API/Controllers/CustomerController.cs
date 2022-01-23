@@ -25,7 +25,9 @@ namespace Rental.API.Controllers
             {
                 Id = customer.Id,
 
-                Name = customer.Name
+                Name = customer.Name,
+
+                LoyaltyPoints = customer.LoyaltyPoints
             };
 
             return Ok(customerModel);
@@ -36,6 +38,8 @@ namespace Rental.API.Controllers
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public int LoyaltyPoints { get; set; }
         public List<OrderViewModel> Orders { get; set; }
     }
 

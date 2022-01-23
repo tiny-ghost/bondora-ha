@@ -1,5 +1,5 @@
-<mat-grid-list style="margin-top:48px;" cols=2 rowHeight="800px">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
+<mat-grid-list style="margin-top:48px;" cols=3 rowHeight="800px">
+  <mat-grid-tile [colspan]="2" [rowspan]="1">
     <div class="container">
       <mat-card *ngFor="let item of equipment" class="card">
         <mat-card-title>
@@ -8,8 +8,15 @@
         <mat-card-subtitle>
           {{item.type}}
         </mat-card-subtitle>
+
         <mat-card-actions>
-          <button mat-stroked-button color="primary">RENT</button>
+          <mat-form-field appearance="standard">
+            <mat-label>Days of renting</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let item of [].constructor(14); let i = index" value="{{i+1}}">{{i+1}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-stroked-button (click)="AddItemToOrder(item.id, 1)" color="primary">ADD ITEM</button>
         </mat-card-actions>
       </mat-card>
     </div>
