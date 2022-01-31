@@ -23,6 +23,15 @@ namespace Rental.Persistence.Repository
                 .Where(o => o.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetAllByCustomerAsync(int customerId)
+        {
+            return await Units
+                .Where(o => o.CustomerId.Equals(customerId))
+                .Include(o => o.RentItems)
+                .ThenInclude(o => o.Equipment)
+                .ToListAsync();
+        }
+
         public async Task<Order> CreateOrderAsync(Order order)
         {
 

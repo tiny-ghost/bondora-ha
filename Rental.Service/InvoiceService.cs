@@ -2,7 +2,7 @@
 using Rental.Core.Contracts.Service;
 using Rental.Core.Models;
 using Rental.Core.ViewModel;
-
+using System.Text;
 
 namespace Rental.Service
 {
@@ -20,25 +20,42 @@ namespace Rental.Service
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<InvoiceViewModel> CreateInvoiceFromOrderAsync(int orderId)
+        public async Task<MemoryStream> CreateTextInvoiceFromOrderAsync(int orderId)
         {
+            var sb = new StringBuilder();
+
+           
             var order = await _unitOfWork.Orders.GetByIdASync(orderId);
             var customer = await _unitOfWork.Customers.GetAsync(order.CustomerId);
             var totalLoyalty = CalculateRoyaltyPoints(order);
-
-            var rentalItem = CalculateRentalFee(order);
+            var pricedRentalItems = CalculateRentalFee(order);
             var totalPrice = 0.00m;
-            rentalItem.ForEach(item => totalPrice += item.Fee);
-            var invoice = new InvoiceViewModel
-            {
-                Title = $"Order {order.Id} for {customer.Name}",
-                RentalItem = rentalItem,
-                TotalPrice = totalPrice,
-                TotalRoyaltyEarned = totalLoyalty,
+            pricedRentalItems.ForEach(item => totalPrice += item.Fee);
 
-            };
+            sb.AppendLine($"Invoice for order number: {order.Id}.\n\nCustomer {customer.Name}\n");
+            sb.AppendLine(string.Format("{0,-25}{1,10}","Item Name", "Price"));
+            sb.AppendLine(new string('-',35));
 
-            return invoice;
+
+            pricedRentalItems.ForEach(item => {
+            
+                sb.AppendLine(string.Format($"{item.Name, -25}{item.Fee,10:C}"));
+            
+            });           
+            sb.AppendLine(new string('-', 35));
+            sb.AppendLine(string.Format("{0,-25}{1,10:C}","Total:",totalPrice));
+            sb.AppendLine("\n");
+            sb.AppendLine(string.Format("{0,-25}{1,10}", "Royalty earned:", totalLoyalty));
+
+
+            byte[] buffer;
+            var memoryStream = new MemoryStream();
+            buffer = Encoding.Default.GetBytes(sb.ToString());
+
+            memoryStream.Write(buffer, 0, buffer.Length);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            return memoryStream;
 
         }
 

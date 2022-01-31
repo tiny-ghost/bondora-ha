@@ -14,10 +14,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+
+//Services
+import { RentalService } from './services/rental.service';
 
 @NgModule({
   declarations: [
@@ -31,19 +36,21 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     FormsModule,
     MatToolbarModule,
+    MatIconModule,
     MatChipsModule,
     MatGridListModule,
-    MatCardModule,
+    MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatInputModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
     ]),
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [RentalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

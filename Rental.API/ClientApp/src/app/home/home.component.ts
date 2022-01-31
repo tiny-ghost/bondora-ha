@@ -1,6 +1,12 @@
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
-import { ConstantPool } from '@angular/compiler';
 import { Component, Inject } from '@angular/core';
+import { Observable, ReplaySubject } from 'rxjs';
+import { OrderDto } from '../Models/OrderDto';
+import { OrderViewModel } from '../Models/OrderViewModel';
+import { RentalItem } from '../Models/RentalItem';
+import { RentalService } from '../services/rental.service';
+
 
 @Component({
   selector: 'app-home',
@@ -8,26 +14,92 @@ import { Component, Inject } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  order: Order = { CustomerId: 1, RentalItems: [] }
-  public equipment: Equipment[] = [];
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+
+
+  equipment: Equipment[] = [];
+  customerOrders: OrderViewModel[] = [];
+  rentalItemData: RentalItem[] = [];
+  cartDataSource = new TableDataSource<RentalItem>(this.rentalItemData);
+  orderDataSource = new TableDataSource<OrderViewModel>(this.customerOrders);
+  order: OrderDto = { CustomerId: 1, RentalItems: [] } //Customer id is always 1 as there is only one customer
+  selectedEquip: Equipment = { id: 0, name: "", type: "" };
+  cartDisplayedColumns: string[] = ['name', 'type', 'duration', 'action'];
+  orderDisplayedColumns: string[] = ['id', 'items', 'action']
+  daysOfRent = 1;
+
+  constructor(private _rentalService: RentalService, http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Equipment[]>(baseUrl + 'Equipment').subscribe(result => {
+      console.log(result);
       this.equipment = result;
+      this.selectedEquip = this.equipment[0];
     }, error => console.error(error));
   }
+  ngOnInit() {
 
-  public CreateOrder() {
+    this.getCustomerOrders(1);
   }
 
-  public AddItemToOrder(ItemId: number, DaysOfRental: number) {
+  getCustomerOrders(customerId: number): void {
+    this._rentalService.getCustomerOrder(customerId).subscribe(res => {
+      this.customerOrders = res;
+      this.orderDataSource.setData(this.customerOrders);
+    })
+  }
 
-    console.log(event);
-    let item: RentalItem = { EquipmentId: 0, DaysOfRental: 0 }
-    item.DaysOfRental = DaysOfRental;
-    item.EquipmentId = ItemId;
+  getInvoice(orderId: number) {
+    window.open(`/Invoice/${orderId}`);
+  }
+
+  PlaceOrder() {
+
+    this._rentalService.PlaceOrder(this.order).subscribe();
+    this.getCustomerOrders(1);
+
+    this.order = { CustomerId: 1, RentalItems: [] };
+  }
+
+  AddItemToOrder() {
+
+    let item: RentalItem = this.createRentalItem();
+
     this.order.RentalItems.push(item);
-    console.log(this.order);
+
+    this.updateCartTable();
+
+    this.resetForm();
+
   }
+
+  removeItemFromOrder(item: RentalItem) {
+
+    let index = this.order.RentalItems.indexOf(item);
+    if (index !== -1) {
+      this.order.RentalItems.splice(index, 1);
+      this.cartDataSource.setData(this.order.RentalItems);
+    }
+
+  }
+
+  private createRentalItem(): RentalItem {
+    let item: RentalItem = { Name: "", Type: "", EquipmentId: 0, DaysOfRental: 0 }
+    item.Name = this.selectedEquip.name;
+    item.Type = this.selectedEquip.type;
+    item.DaysOfRental = this.daysOfRent;
+    item.EquipmentId = this.selectedEquip.id;
+    return item;
+  }
+
+  private updateCartTable(): void {
+
+    this.cartDataSource.setData(this.order.RentalItems);
+  }
+
+  private resetForm(): void {
+    this.daysOfRent = 1;
+
+  }
+
+
 }
 
 interface Equipment {
@@ -36,12 +108,27 @@ interface Equipment {
   type: string
 }
 
-interface Order {
-  CustomerId: number,
-  RentalItems: RentalItem[]
+class TableDataSource<T> extends DataSource<T>{
+
+  private _dataStream = new ReplaySubject<T[]>();
+
+  constructor(initialData: T[]) {
+    super();
+    this.setData(initialData);
+  }
+  disconnect(collectionViewer: CollectionViewer): void {
+
+  }
+
+  connect(collectionViewer: CollectionViewer): Observable<readonly T[]> {
+    return this._dataStream;
+  }
+
+  setData(data: T[]) {
+    this._dataStream.next(data);
+  }
 }
 
-interface RentalItem {
-  EquipmentId: number,
-  DaysOfRental: number
-}
+
+
+

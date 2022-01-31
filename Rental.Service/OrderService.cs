@@ -20,18 +20,6 @@ namespace Rental.Service
         {
             await _unitOfWork.Orders.CreateOrderAsync(order);
 
-            //var rentItems = new List<RentalItem>();
-            //foreach (var item in order.RentItems)
-            //{
-                
-            //    var rental = new RentalItem
-            //    {
-            //        DaysOfRental = item.DaysOfRental,
-            //        EquipmentId = item.EquipmentId,
-            //        OrderId = order.Id
-            //    };
-            //    rentItems.Add(rental);
-            //}
             foreach (var item in order.RentItems)
             {
                 await _unitOfWork.RentalItems.AddAsync(item);
@@ -40,6 +28,11 @@ namespace Rental.Service
             
             return order;
 
+        }
+
+        public async Task<IEnumerable<Order>> GetAllCustomerOrdersAsync(int customerId)
+        {
+           return await _unitOfWork.Orders.GetAllByCustomerAsync(customerId);
         }
     }
 }

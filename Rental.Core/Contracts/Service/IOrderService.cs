@@ -1,4 +1,5 @@
 ﻿using Rental.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Rental.Core.Contracts.Service
@@ -7,5 +8,6 @@ namespace Rental.Core.Contracts.Service
     {
         Task<Order> PlaceOrderForCustomerASync(Order order);
         Task<Order> GetByIdAsync(int id);
+        Task<IEnumerable<Order>> GetAllCustomerOrdersAsync(int customerId);
     }
 }

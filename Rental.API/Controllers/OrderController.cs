@@ -39,6 +39,12 @@ namespace Rental.API.Controllers
 
             return Ok(await _orderService.PlaceOrderForCustomerASync(order));
         }
+
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetCustomerOrders(int customerId)
+        {
+            return Ok(await _orderService.GetAllCustomerOrdersAsync(customerId));
+        }
     }
     //For simplicity and time saving viewmodels stored with controller and mapping is done manually
     public class OrderViewModel

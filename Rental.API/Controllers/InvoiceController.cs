@@ -20,10 +20,22 @@ namespace Rental.API.Controllers
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetInvoiceAsync(int orderId)
         {
+            try
+            {
 
            
+            var result = new FileStreamResult(fileStream: await _invoiceService.CreateTextInvoiceFromOrderAsync(orderId), "text/plain")
+            {
+                FileDownloadName = $"Order_number_{orderId}_invoice.txt"
+            };
 
-            return Ok(await _invoiceService.CreateInvoiceFromOrderAsync(orderId));
+            return result;
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
 
     }
