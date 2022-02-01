@@ -36,10 +36,10 @@ export class HomeComponent {
   }
   ngOnInit() {
 
-    this.getCustomerOrders(1);
+    this.getOrdersByCustomerId(1);
   }
 
-  getCustomerOrders(customerId: number): void {
+  getOrdersByCustomerId(customerId: number): void {
     this._rentalService.getCustomerOrder(customerId).subscribe(res => {
       this.customerOrders = res;
       this.orderDataSource.setData(this.customerOrders);
@@ -52,8 +52,10 @@ export class HomeComponent {
 
   PlaceOrder() {
 
-    this._rentalService.PlaceOrder(this.order).subscribe();
-    this.getCustomerOrders(1);
+    this._rentalService.PlaceOrder(this.order).subscribe(() => {
+      this.getOrdersByCustomerId(1);
+    });
+
 
     this.order = { CustomerId: 1, RentalItems: [] };
   }
