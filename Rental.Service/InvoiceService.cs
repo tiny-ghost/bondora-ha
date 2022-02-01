@@ -66,9 +66,9 @@ namespace Rental.Service
             {
                 (string name , decimal fee) = item.Equipment.Type switch
                 {
-                    "Heavy" => CalculateHeavy(item),
-                    "Regular" => CalculateRegular(item),
-                    "Specialized" => CalculateSpecialized(item),
+                    "Heavy" => CalculateHeavyType(item),
+                    "Regular" => CalculateRegularType(item),
+                    "Specialized" => CalculateSpecializedType(item),
                     _ => new ()
                 };
 
@@ -78,7 +78,7 @@ namespace Rental.Service
             return result;
         }
 
-        private static (string name,decimal fee) CalculateHeavy(RentalItem item)
+        private static (string name,decimal fee) CalculateHeavyType(RentalItem item)
         {
             var equipName = item.Equipment.Name;
 
@@ -88,7 +88,7 @@ namespace Rental.Service
 
         }
 
-        private static (string name, decimal fee) CalculateRegular(RentalItem item)
+        private static (string name, decimal fee) CalculateRegularType(RentalItem item)
         {
 
             var equipName = item.Equipment.Name;
@@ -110,7 +110,7 @@ namespace Rental.Service
 
         }
 
-        private static (string name, decimal fee) CalculateSpecialized(RentalItem item)
+        private static (string name, decimal fee) CalculateSpecializedType(RentalItem item)
         {
 
             var equipName = item.Equipment.Name;

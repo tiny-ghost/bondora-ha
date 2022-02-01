@@ -1,7 +1,4 @@
-﻿
-
-using Rental.Core.Contracts;
-using Rental.Core.Contracts.Repository;
+﻿using Rental.Core.Contracts.Repository;
 using Rental.Core.Models;
 
 namespace Rental.Persistence.Repository
@@ -12,11 +9,6 @@ namespace Rental.Persistence.Repository
         {
         }
 
-        public async Task AddRentalItemsToOrderAsync(RentalItem item)
-        {
-
-            await AddAsync(item);
-        }
-
+        public override IQueryable<RentalItem> Units => base.Units;
     }
 }
