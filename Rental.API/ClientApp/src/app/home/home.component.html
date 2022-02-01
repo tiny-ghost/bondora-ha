@@ -58,7 +58,8 @@
   <mat-grid-tile [colspan]="12">
     <mat-grid-tile-header>Your orders</mat-grid-tile-header>
     <div class="order-container">
-      <table *ngIf="customerOrders.length !== 0" mat-table [dataSource]="orderDataSource" class="mat-elevation-z8">
+      <p style="text-align: center;" *ngIf="customerOrders.length === 0">There are no orders yet...</p>
+      <table mat-table [dataSource]="orderDataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>Order No.</th>
           <td mat-cell *matCellDef="let item">{{item.id}}</td>
@@ -78,7 +79,7 @@
         <tr mat-header-row *matHeaderRowDef="orderDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: orderDisplayedColumns;"></tr>
       </table>
-      <p style="text-align: center;" *ngIf="customerOrders.length === 0">There are no orders yet...</p>
+
     </div>
   </mat-grid-tile>
 </mat-grid-list>
