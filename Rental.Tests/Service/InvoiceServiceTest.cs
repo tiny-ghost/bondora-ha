@@ -1,21 +1,21 @@
-using Xunit;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Moq;
 using Rental.Core.Contracts.Service;
-using System;
-using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Rental.Persistence;
-using Microsoft.Data.Sqlite;
-using Rental.Service;
 using Rental.Core.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text;
+using Rental.Persistence;
+using Rental.Service;
+using Xunit;
 
 namespace Rentlat.Tests
 {
-    public class InvoiceServiceTest : RepositoryTest, IDisposable
+    public sealed class InvoiceServiceTest : RepositoryTest, IDisposable
     {
         private readonly DbConnection? _connection;
         public InvoiceServiceTest() : base(new DbContextOptionsBuilder<RentalContext>()

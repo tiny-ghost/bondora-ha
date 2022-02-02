@@ -1,16 +1,16 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Rental.Persistence;
-using System;
+﻿using System;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Rental.Persistence;
 using Xunit;
 
 namespace Rentlat.Tests
 {
-    public class InMemoryEquipmentRepositoryTest : RepositoryTest, IDisposable
+    public sealed class InMemoryEquipmentRepositoryTest : RepositoryTest, IDisposable
     {
         private readonly DbConnection? _connection;
 

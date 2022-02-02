@@ -1,25 +1,25 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Rental.Core.Models;
 using Rental.Persistence;
 using Rental.Service;
 using Rentlat.Tests;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Rental.Tests.Service
 {
-    public class OrderServiceTest :RepositoryTest, IDisposable
+    public sealed class OrderServiceTest : RepositoryTest, IDisposable
     {
 
         private readonly DbConnection? _connection;
 
-        public OrderServiceTest()  : base(new DbContextOptionsBuilder<RentalContext>()
+        public OrderServiceTest() : base(new DbContextOptionsBuilder<RentalContext>()
                  .UseSqlite(CreateInMemoryDatabase()).Options)
         {
 

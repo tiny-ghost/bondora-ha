@@ -1,19 +1,19 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Rental.Core.Models;
 using Rental.Persistence;
 using Rentlat.Tests;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Rental.Tests.Repository
 {
-    public class InMemoryOrderRepositoryTest : RepositoryTest, IDisposable
+    public sealed class InMemoryOrderRepositoryTest : RepositoryTest, IDisposable
     {
         private readonly DbConnection? _connection;
         public InMemoryOrderRepositoryTest() : base(new DbContextOptionsBuilder<RentalContext>()
@@ -78,7 +78,7 @@ namespace Rental.Tests.Repository
             Assert.Equal(result.Id, orderId);
         }
 
-        [Fact]  
+        [Fact]
         public async Task TaskGetAllByCustomerAsync_WithCustomerId_Should_ReturnAllCustomerOrders()
         {
             //Arrange
@@ -109,7 +109,7 @@ namespace Rental.Tests.Repository
 
             await unitOfWork.Orders.CreateOrderAsync(order1);
             await unitOfWork.Orders.CreateOrderAsync(order2);
-            
+
             //Act
             var result = await unitOfWork.Orders.GetAllByCustomerAsync(customerId);
 

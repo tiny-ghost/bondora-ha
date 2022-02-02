@@ -1,18 +1,18 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Rental.Core.Models;
 using Rental.Persistence;
 using Rentlat.Tests;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Rental.Tests.Repository
 {
-    public class InMemoryRentalItemRepositoryTest : RepositoryTest, IDisposable
+    public sealed class InMemoryRentalItemRepositoryTest : RepositoryTest, IDisposable
     {
         private readonly DbConnection? _connection;
 
@@ -79,7 +79,7 @@ namespace Rental.Tests.Repository
             //Act 
             try
             {
-               await unitOfWork.RentalItems.AddAsync(item);
+                await unitOfWork.RentalItems.AddAsync(item);
             }
             catch (Exception e)
             {
@@ -93,5 +93,5 @@ namespace Rental.Tests.Repository
 
         }
     }
-   
+
 }
