@@ -10,7 +10,7 @@
 
 - Open solution and run the project. `Rental.API` is configured as a startup project.
 
-* On the first run, the build process restores npm dependencies, which can take several minutes.
+- On the first run, the build process restores npm dependencies, which can take several minutes.
 
 - Back-end and front-end will launch automatically after that
 
@@ -19,6 +19,16 @@
 - Navigate to the solution folder
 - Navigate to Rental.API sub folder and run command `dotnet run` or run `dotnet run --project Rental.API` from solution folder
 - When project statred up in browser navigate to `http://localhost:5294`. This will trigger Angular front-end
+
+### Running tests
+
+#### Visual studio 2022
+
+- Test -> Run All Tests `Ctrl+R,A`
+
+#### .NET core CLI
+
+- In solution folder run command `dotnet test`
 
 ---
 
