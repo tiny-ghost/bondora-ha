@@ -4,6 +4,7 @@
 
 - .NET 6 installed
 - MSSQL installed
+- node.js lastet (for Angular front end)
 - Visual Studio 2022 (optional)
 
 #### Running with Visual studio 2022
