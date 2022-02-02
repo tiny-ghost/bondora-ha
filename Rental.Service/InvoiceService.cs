@@ -59,7 +59,7 @@ namespace Rental.Service
 
         }
 
-        private List<RentalItemViewModel> CalculateRentalFee(Order order)
+        private static List<RentalItemViewModel> CalculateRentalFee(Order order)
         {
             var result = new List<RentalItemViewModel>();
             foreach (var item in order.RentItems)
@@ -132,7 +132,7 @@ namespace Rental.Service
 
         }
 
-        private int CalculateRoyaltyPoints(Order order)
+        private static int CalculateRoyaltyPoints(Order order)
         {
             var total = 0;
             foreach (var item in order.RentItems)

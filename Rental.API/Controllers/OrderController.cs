@@ -9,14 +9,10 @@ namespace Rental.API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly ICustomerService _customerService;
-        private readonly IEquipmentService _equipmentService;
 
-        public OrderController(IOrderService orderService, IEquipmentService equipmentService, ICustomerService customerService)
+        public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
-            _equipmentService = equipmentService;
-            _customerService = customerService;
         }
         [HttpGet("{id}")]
 
@@ -43,7 +39,7 @@ namespace Rental.API.Controllers
         [HttpGet("customer/{customerId}")]
         public async Task<IActionResult> GetCustomerOrders(int customerId)
         {
-            return Ok(await _orderService.GetAllCustomerOrdersAsync(customerId));
+            return Ok(await _orderService.GetAllOrdersByCustomerIdAsync(customerId));
         }
     }
     //For simplicity and time saving viewmodels stored with controller and mapping is done manually

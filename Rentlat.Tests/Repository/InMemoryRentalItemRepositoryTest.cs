@@ -14,7 +14,7 @@ namespace Rental.Tests.Repository
 {
     public class InMemoryRentalItemRepositoryTest : RepositoryTest, IDisposable
     {
-        private readonly DbConnection _connection;
+        private readonly DbConnection? _connection;
 
         public InMemoryRentalItemRepositoryTest() : base(new DbContextOptionsBuilder<RentalContext>()
                  .UseSqlite(CreateInMemoryDatabase()).Options)
@@ -29,7 +29,7 @@ namespace Rental.Tests.Repository
             return connection;
         }
 
-        public void Dispose() => _connection.Dispose();
+        public void Dispose() => _connection?.Dispose();
 
         [Fact]
         public async Task AddAsync_WhenCalled_ShouldAddItemToDb()

@@ -8,12 +8,10 @@ namespace Rental.API.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        private readonly IOrderService _orderService;
         private readonly IInvoiceService _invoiceService;
 
-        public InvoiceController(IOrderService orderService, IInvoiceService invoiceService)
+        public InvoiceController(IInvoiceService invoiceService)
         {
-            _orderService = orderService;
             _invoiceService = invoiceService;
         }
 

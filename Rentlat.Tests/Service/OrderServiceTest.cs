@@ -17,7 +17,7 @@ namespace Rental.Tests.Service
     public class OrderServiceTest :RepositoryTest, IDisposable
     {
 
-        private readonly DbConnection _connection;
+        private readonly DbConnection? _connection;
 
         public OrderServiceTest()  : base(new DbContextOptionsBuilder<RentalContext>()
                  .UseSqlite(CreateInMemoryDatabase()).Options)
@@ -33,7 +33,7 @@ namespace Rental.Tests.Service
             return connection;
         }
 
-        public void Dispose() => _connection.Dispose();
+        public void Dispose() => _connection?.Dispose();
 
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Rental.Tests.Service
             var result = await _orderService.GetByIdAsync(1);
 
             //Assert
-            Assert.Equal(result.RentItems.Count(), expected);
+            Assert.Equal(result.RentItems.Count, expected);
         }
 
         [Fact]

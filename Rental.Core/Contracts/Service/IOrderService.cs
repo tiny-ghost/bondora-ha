@@ -8,6 +8,6 @@ namespace Rental.Core.Contracts.Service
     {
         Task<Order> PlaceOrderForCustomerASync(Order order);
         Task<Order> GetByIdAsync(int id);
-        Task<IEnumerable<Order>> GetAllCustomerOrdersAsync(int customerId);
+        Task<IEnumerable<Order>> GetAllOrdersByCustomerIdAsync(int customerId);
     }
 }

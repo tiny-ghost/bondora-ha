@@ -30,7 +30,7 @@ namespace Rental.Service
 
         }
 
-        public async Task<IEnumerable<Order>> GetAllCustomerOrdersAsync(int customerId)
+        public async Task<IEnumerable<Order>> GetAllOrdersByCustomerIdAsync(int customerId)
         {
            return await _unitOfWork.Orders.GetAllByCustomerAsync(customerId);
         }

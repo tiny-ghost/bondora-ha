@@ -12,7 +12,7 @@ namespace Rentlat.Tests
 {
     public class InMemoryEquipmentRepositoryTest : RepositoryTest, IDisposable
     {
-        private readonly DbConnection _connection;
+        private readonly DbConnection? _connection;
 
         public InMemoryEquipmentRepositoryTest() : base(new DbContextOptionsBuilder<RentalContext>()
                  .UseSqlite(CreateInMemoryDatabase()).Options)
@@ -29,7 +29,7 @@ namespace Rentlat.Tests
             return connection;
         }
 
-        public void Dispose() => _connection.Dispose();
+        public void Dispose() => _connection?.Dispose();
 
         [Fact]
         public async Task GetAllAsync_WhenCalled_ReturnAllEquipment()
